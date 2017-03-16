@@ -129,6 +129,8 @@
 
 #include "sis_video.h"
 
+extern void sis_print_registers(SISPtr pSiS);
+
 void SiSInitMC(ScreenPtr pScreen);
 
 /*********************************
@@ -712,6 +714,8 @@ SISResetVideo(ScrnInfoPtr pScrn)
 #ifdef SISMERGED
     pPriv->mustresettap2 = TRUE;
 #endif
+
+    sis_print_registers(pSiS);
 }
 
 
