@@ -2948,11 +2948,11 @@ SiSXineramaExtensionInit(ScrnInfoPtr pScrn)
 
        while(SiSXineramaGeneration != serverGeneration) {
 
-	  ClientType = CreateNewResourceType(SiSXineramaFreeClient);
+	  ClientType = CreateNewResourceType(SiSXineramaFreeClient, "XineramaClient");
 	  if(!ClientType)
 	     break;
 
-	  EventType = CreateNewResourceType(SiSXineramaFreeEvents);
+	  EventType = CreateNewResourceType(SiSXineramaFreeEvents, "XineramaEvents");
 	  if(!EventType)
 	     break;
 
