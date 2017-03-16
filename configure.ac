@@ -21,7 +21,7 @@
 # Process this file with autoconf to produce a configure script
 
 # Initialize Autoconf
-AC_PREREQ(2.60)
+AC_PREREQ([2.60])
 AC_INIT([xf86-video-sis],
         0.9.1,
         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
@@ -31,7 +31,7 @@ AM_CONFIG_HEADER([config.h])
 AC_CONFIG_AUX_DIR(.)
 
 # Initialize Automake
-AM_INIT_AUTOMAKE([dist-bzip2])
+AM_INIT_AUTOMAKE([foreign dist-bzip2])
 AM_MAINTAINER_MODE
 
 # Require X.Org macros 1.8 or later for MAN_SUBSTS set by XORG_MANPAGE_SECTIONS
@@ -40,10 +40,9 @@ m4_ifndef([XORG_MACROS_VERSION],
 XORG_MACROS_VERSION(1.8)
 XORG_DEFAULT_OPTIONS
 
-# Checks for programs.
+# Initialize libtool
 AC_DISABLE_STATIC
 AC_PROG_LIBTOOL
-AC_PROG_CC
 XORG_PROG_RAWCPP
 
 AH_TOP([#include "xorg-server.h"])
@@ -75,9 +74,6 @@ AM_CONDITIONAL(HAVE_XEXTPROTO_71, [ test "$HAVE_XEXTPROTO_71" = "yes" ])
 sdkdir=`$PKG_CONFIG --variable=sdkdir xorg-server`
 
 # Checks for libraries.
-
-# Checks for header files.
-AC_HEADER_STDC
 
 if test "$DRI" != no; then
         AC_CHECK_FILE([${sdkdir}/dri.h],
@@ -123,8 +119,6 @@ if test "x$XSERVER_LIBPCIACCESS" = xyes; then
 fi
 AM_CONDITIONAL(XSERVER_LIBPCIACCESS, test "x$XSERVER_LIBPCIACCESS" = xyes)
 
-AC_SUBST([DRI_CFLAGS])
-AC_SUBST([XORG_CFLAGS])
 AC_SUBST([moduledir])
 
 DRIVER_NAME=sis
