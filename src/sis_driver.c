@@ -86,8 +86,6 @@
 #include "mibank.h"
 #include "mipointer.h"
 #include "mibstore.h"
-#define _XF86MISC_SERVER_
-#include <X11/extensions/xf86misc.h>
 #include "edid.h"
 
 #define SIS_NEED_inSISREG
@@ -506,11 +504,6 @@ xf86DrvMsg(0, X_INFO, "                       func=%d\n", device->func);
 	    pScrn->FreeScreen       = SISFreeScreen;
 	    pScrn->ValidMode        = SISValidMode;
 	    pScrn->PMEvent          = SISPMEvent; /*add PM function for ACPI hotkey,Ivans*/
-#ifdef X_XF86MiscPassMessage
-//   if(xf86GetVersion() >= XF86_VERSION_NUMERIC(4,3,99,2,0)) {
-//	       pScrn->HandleMessage = SISHandleMessage;
-//	    }
-#endif
 	    foundScreen = TRUE;
 	}
     #ifdef SISDUALHEAD

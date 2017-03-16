@@ -40,8 +40,6 @@
 #define NEED_EVENTS
 #include <X11/X.h>
 #include "dixstruct.h"
-#define _XF86MISC_SERVER_
-#include <X11/extensions/xf86misc.h>
 
 #include "sis_videostr.h"
 
@@ -262,9 +260,6 @@ typedef struct {
     int		 (*HandleSiSDirectCommand[SISCTRL_MAX_SCREENS])(xSiSCtrlCommandReply *);
 } xSiSCtrlScreenTable;
 
-#ifdef X_XF86MiscPassMessage
-int		SISHandleMessage(int scrnIndex, const char *msgtype, const char *msgval, char **retmsg);
-#endif
 void		SiSCtrlExtInit(ScrnInfoPtr pScrn);
 void		SiSCtrlExtUnregister(SISPtr pSiS, int index);
 
@@ -973,19 +968,6 @@ unsigned int SISVGADetected(ScrnInfoPtr pScrn)
 
 	return detected;
 }
-
-/***********************************
- *     MessageHandler interface    *
- *   (unused now; use extension)   *
- ***********************************/
-
-#ifdef X_XF86MiscPassMessage
-int
-SISHandleMessage(int scrnIndex, const char *msgtype, const char *msgval, char **retmsg)
-{
-    return BadMatch;
-}
-#endif
 
 /***********************************
  *   SiSCtrl extension interface   *
