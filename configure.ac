@@ -20,19 +20,25 @@
 #
 # Process this file with autoconf to produce a configure script
 
-AC_PREREQ(2.57)
+# Initialize Autoconf
+AC_PREREQ(2.60)
 AC_INIT([xf86-video-sis],
         0.9.1,
         [https://bugs.freedesktop.org/enter_bug.cgi?product=xorg],
         xf86-video-sis)
-
 AC_CONFIG_SRCDIR([Makefile.am])
 AM_CONFIG_HEADER([config.h])
 AC_CONFIG_AUX_DIR(.)
 
+# Initialize Automake
 AM_INIT_AUTOMAKE([dist-bzip2])
-
 AM_MAINTAINER_MODE
+
+# Require X.Org macros 1.8 or later for MAN_SUBSTS set by XORG_MANPAGE_SECTIONS
+m4_ifndef([XORG_MACROS_VERSION],
+          [m4_fatal([must install xorg-macros 1.8 or later before running autoconf/autogen])])
+XORG_MACROS_VERSION(1.8)
+XORG_DEFAULT_OPTIONS
 
 # Checks for programs.
 AC_DISABLE_STATIC
@@ -66,7 +72,7 @@ PKG_CHECK_MODULES(XEXT, [xextproto >= 7.0.99.1],
                   HAVE_XEXTPROTO_71="yes"; AC_DEFINE(HAVE_XEXTPROTO_71, 1, [xextproto 7.1 available]),
                   HAVE_XEXTPROTO_71="no")
 AM_CONDITIONAL(HAVE_XEXTPROTO_71, [ test "$HAVE_XEXTPROTO_71" = "yes" ])
-sdkdir=$(pkg-config --variable=sdkdir xorg-server)
+sdkdir=`$PKG_CONFIG --variable=sdkdir xorg-server`
 
 # Checks for libraries.
 
@@ -103,6 +109,19 @@ fi
 
 # technically this should be a configure flag.  meh.
 AC_DEFINE(XF86EXA, 1, [Build support for Exa])
+
+SAVE_CPPFLAGS="$CPPFLAGS"
+CPPFLAGS="$CPPFLAGS $XORG_CFLAGS"
+AC_CHECK_DECL(XSERVER_LIBPCIACCESS,
+              [XSERVER_LIBPCIACCESS=yes],[XSERVER_LIBPCIACCESS=no],
+              [#include "xorg-server.h"])
+CPPFLAGS="$SAVE_CPPFLAGS"
+
+if test "x$XSERVER_LIBPCIACCESS" = xyes; then
+    PKG_CHECK_MODULES([PCIACCESS], [pciaccess >= 0.12.901])
+    XORG_CFLAGS="$XORG_CFLAGS $PCIACCESS_CFLAGS"
+fi
+AM_CONDITIONAL(XSERVER_LIBPCIACCESS, test "x$XSERVER_LIBPCIACCESS" = xyes)
 
 AC_SUBST([DRI_CFLAGS])
 AC_SUBST([XORG_CFLAGS])

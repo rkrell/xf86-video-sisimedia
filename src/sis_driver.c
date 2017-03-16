@@ -6015,7 +6015,11 @@ SISUnmapIOPMem(ScrnInfoPtr pScrn)
         if(pSiSEnt->MapCountIOPBase) {
 	    pSiSEnt->MapCountIOPBase--;
 	    if((pSiSEnt->MapCountIOPBase == 0) || (pSiSEnt->forceUnmapIOPBase)) {
-		xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiSEnt->IOPBase, 2048);
+#if XSERVER_LIBPCIACCESS
+                (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiSEnt->IOPBase, 2048);
+#else
+                xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiSEnt->IOPBase, 2048);
+#endif
 		pSiSEnt->IOPBase = NULL;
 		pSiSEnt->MapCountIOPBase = 0;
 		pSiSEnt->forceUnmapIOPBase = FALSE;
@@ -6024,7 +6028,11 @@ SISUnmapIOPMem(ScrnInfoPtr pScrn)
 	}
     } else {
 #endif
+#if XSERVER_LIBPCIACCESS
+        (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiS->IOPBase, 2048);
+#else
 	xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiS->IOPBase, 2048);
+#endif
 	pSiS->IOPBase = NULL;
 #ifdef SISDUALHEAD
     }
@@ -6249,7 +6257,11 @@ SISUnmapMem(ScrnInfoPtr pScrn)
         if(pSiSEnt->MapCountIOBase) {
 	    pSiSEnt->MapCountIOBase--;
 	    if((pSiSEnt->MapCountIOBase == 0) || (pSiSEnt->forceUnmapIOBase)) {
+#if XSERVER_LIBPCIACCESS
+                (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiSEnt->IOBase, (pSiS->mmioSize * 1024));
+#else
 		xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiSEnt->IOBase, (pSiS->mmioSize * 1024));
+#endif
 		pSiSEnt->IOBase = NULL;
 		pSiSEnt->MapCountIOBase = 0;
 		pSiSEnt->forceUnmapIOBase = FALSE;
@@ -6260,7 +6272,11 @@ SISUnmapMem(ScrnInfoPtr pScrn)
 	if(pSiSEnt->MapCountIOBaseDense) {
 	    pSiSEnt->MapCountIOBaseDense--;
 	    if((pSiSEnt->MapCountIOBaseDense == 0) || (pSiSEnt->forceUnmapIOBaseDense)) {
+#if XSERVER_LIBPCIACCESS
+                (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiSEnt->IOBaseDense, (pSiS->mmioSize * 1024));
+#else
 		xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiSEnt->IOBaseDense, (pSiS->mmioSize * 1024));
+#endif
 		pSiSEnt->IOBaseDense = NULL;
 		pSiSEnt->MapCountIOBaseDense = 0;
 		pSiSEnt->forceUnmapIOBaseDense = FALSE;
@@ -6271,7 +6287,11 @@ SISUnmapMem(ScrnInfoPtr pScrn)
 	if(pSiSEnt->MapCountFbBase) {
 	    pSiSEnt->MapCountFbBase--;
 	    if((pSiSEnt->MapCountFbBase == 0) || (pSiSEnt->forceUnmapFbBase)) {
+#if XSERVER_LIBPCIACCESS
+                (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiSEnt->RealFbBase, pSiS->FbMapSize);
+#else
 		xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiSEnt->RealFbBase, pSiS->FbMapSize);
+#endif
 		pSiSEnt->FbBase = pSiSEnt->RealFbBase = NULL;
 		pSiSEnt->MapCountFbBase = 0;
 		pSiSEnt->forceUnmapFbBase = FALSE;
@@ -6281,13 +6301,25 @@ SISUnmapMem(ScrnInfoPtr pScrn)
 	}
     } else {
 #endif
+#if XSERVER_LIBPCIACCESS
+        (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiS->IOBase, (pSiS->mmioSize * 1024));
+#else
 	xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiS->IOBase, (pSiS->mmioSize * 1024));
+#endif
 	pSiS->IOBase = NULL;
 #ifdef __alpha__
+#if XSERVER_LIBPCIACCESS
+        (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiS->IOBaseDense, (pSiS->mmioSize * 1024));
+#else
 	xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiS->IOBaseDense, (pSiS->mmioSize * 1024));
+#endif
 	pSiS->IOBaseDense = NULL;
 #endif
+#if XSERVER_LIBPCIACCESS
+        (void) pci_device_unmap_legacy(pSiS->PciInfo, (pointer)pSiS->RealFbBase, pSiS->FbMapSize);
+#else
 	xf86UnMapVidMem(pScrn->scrnIndex, (pointer)pSiS->RealFbBase, pSiS->FbMapSize);
+#endif
 	pSiS->FbBase = pSiS->RealFbBase = NULL;
 #ifdef SISDUALHEAD
     }
@@ -10941,7 +10973,13 @@ SiS_GetSetBIOSScratch(ScrnInfoPtr pScrn, UShort offset, UChar value)
 
 #ifdef SIS_USE_BIOS_SCRATCH
     if(SISPTR(pScrn)->Primary) {
+
+#if XSERVER_LIBPCIACCESS
+       (void) pci_device_map_legacy(SISPTR(pScrn)->PciInfo, 0, 0x2000, 1, &base); // HA HA HA MAGIC NUMBER
+#else
        base = xf86MapVidMem(pScrn->scrnIndex, VIDMEM_MMIO, 0, 0x2000);
+#endif
+
        if(!base) {
           SISErrorLog(pScrn, "(Could not map BIOS scratch area)\n");
           return ret;
@@ -10954,7 +10992,11 @@ SiS_GetSetBIOSScratch(ScrnInfoPtr pScrn, UShort offset, UChar value)
           *(base + offset) = value;
        }
 
+#if XSERVER_LIBPCIACCESS
+       (void) pci_device_unmap_legacy(SISPTR(pScrn)->PciInfo, base, 0x2000);
+#else
        xf86UnMapVidMem(pScrn->scrnIndex, base, 0x2000);
+#endif
     }
 #endif
     return ret;
