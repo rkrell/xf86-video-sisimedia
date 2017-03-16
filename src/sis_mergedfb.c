@@ -357,7 +357,7 @@ SiSCopyModeNLink(ScrnInfoPtr pScrn, DisplayModePtr dest,
 
        strcat(printbuffer, namebuf1);
 
-       xf86DrvMsg(pScrn->scrnIndex, X_INFO, printbuffer);
+       xf86DrvMsg(pScrn->scrnIndex, X_INFO, "%s", printbuffer);
     }
 
     mode->next = mode;
@@ -2137,7 +2137,7 @@ SiSUpdateXineramaScreenInfo(ScrnInfoPtr pScrn1)
        if(infochanged && !usenonrect) {
 	  xf86DrvMsgVerb(pScrn1->scrnIndex, X_INFO, pSiS->XineVerb,
 			"Current screen size does not match maximum display modes...\n");
-	  xf86DrvMsgVerb(pScrn1->scrnIndex, X_INFO, pSiS->XineVerb, rectxine);
+	  xf86DrvMsgVerb(pScrn1->scrnIndex, X_INFO, pSiS->XineVerb, "%s", rectxine);
        }
 
     } else if(infochanged && usenonrect) {
@@ -2145,7 +2145,7 @@ SiSUpdateXineramaScreenInfo(ScrnInfoPtr pScrn1)
        usenonrect = FALSE;
        xf86DrvMsgVerb(pScrn1->scrnIndex, X_INFO, pSiS->XineVerb,
 		"Only clone modes available for this screen size...\n");
-       xf86DrvMsgVerb(pScrn1->scrnIndex, X_INFO, pSiS->XineVerb, rectxine);
+       xf86DrvMsgVerb(pScrn1->scrnIndex, X_INFO, pSiS->XineVerb, "%s", rectxine);
 
     }
 
