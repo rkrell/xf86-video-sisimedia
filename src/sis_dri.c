@@ -56,7 +56,8 @@ extern Bool drmSiSAgpInit(int driSubFD, int offset, int size);
 
 #ifdef XORG_VERSION_CURRENT
 #define SISHAVECREATEBUSID
-#if XORG_VERSION_CURRENT < XORG_VERSION_NUMERIC(6,7,99,1,0)
+#if 0
+//#if XORG_VERSION_CURRENT < XORG_VERSION_NUMERIC(6,7,99,1,0)
  /*I.L. modified*/
 #ifndef XSERVER_LIBPCIACCESS
 extern char *DRICreatePCIBusID(pciVideoPtr PciInfo);

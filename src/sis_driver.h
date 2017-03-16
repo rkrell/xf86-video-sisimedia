@@ -779,6 +779,9 @@ static Bool SISSwitchMode(int scrnIndex, DisplayModePtr mode, int flags);
 static void SISNewAdjustFrame(int scrnIndex, int x, int y, int flags);
 static Bool SISPMEvent(int scrnIndex, pmEvent event, Bool undo);/*APM-ACPI, adding by Ivans.*/
 
+#if XSERVER_LIBPCIACCESS
+static Bool SIS_pci_probe(DriverPtr driver, int entity_num, struct pci_device *device, intptr_t match_data);
+#endif
 /* ACPI Device Switch functions */
 static Bool SISHotkeySwitchCRT1Status(ScrnInfoPtr pScrn,int onoff);/*hotkey pressing: switch CRT1 on/off*/
 static Bool SISHotkeySwitchCRT2Status(ScrnInfoPtr pScrn,ULong newvbflags ,ULong newvbflags3);/*LCD on/off*/

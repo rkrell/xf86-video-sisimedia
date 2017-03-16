@@ -98,6 +98,7 @@
 #define XF86_VERSION_CURRENT XF86_VERSION_NUMERIC(4,3,99,902,0)
 #endif
 
+#if 0
 /*** Xorg Version Path <= X-Server 2.0 ***/
 /* K.T for xorg 1.3 */
 #if XORG_VERSION_CURRENT <= XORG_VERSION_NUMERIC(2,0,0,0,0)
@@ -109,38 +110,42 @@
 #define NEW_XORG_VERSION 1
 #endif
 #endif
+#endif
+#define NEW_XORG_VERSION 1
 
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,0,0,0)
+//#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,0,0,0)
 #define SIS_HAVE_RR_FUNC
 #ifdef HaveDriverFuncs
 #undef  SIS_HaveDriverFuncs
 #define SIS_HaveDriverFuncs HaveDriverFuncs
 #define SIS_HAVE_DRIVER_FUNC
 #endif /* HaveDriverFuncs */
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,900,0)
+//#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,900,0)
 #define SISISXORG6899900
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,901,0)
+//#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,901,0)
 #define SISISXORG6899901
 #ifdef RANDR
 #define SIS_HAVE_RR_GET_MODE_MM
 #define SIS_HAVE_RANDR_SIZE_PATCH
 #endif /* RANDR */
-#endif /* >= 6.8.99.901 */
-#endif /* >= 6.8.99.900 */
-#endif /* >= 6.8.0.0    */
-#else   /* XORG_VERSION_CURRENT */
-#include "xf86Version.h"
-#define SISMYSERVERNAME "XFree86"
+//#endif /* >= 6.8.99.901 */
+//#endif /* >= 6.8.99.900 */
+//#endif /* >= 6.8.0.0    */
+//#else   /* XORG_VERSION_CURRENT */
+//#include "xf86Version.h"
+//#define SISMYSERVERNAME "XFree86"
 #endif
 
 /*I.L. modified*/
 //#define NEC_CASE  /*It used the old Xorg_Version with new PCI structure.*/
 
+#if 0
 #ifdef XSERVER_LIBPCIACCESS
 #ifdef NEC_CASE
 #define XORG_VERSION_CURRENT (((7) * 10000000) + ((1) * 100000) + ((0) * 1000) + 0)
 #else
 #define XORG_VERSION_CURRENT (((7) * 10000000) + ((4) * 100000) + ((0) * 1000) + 0)
+#endif
 #endif
 #endif
 
@@ -268,16 +273,16 @@
 
 #undef SISCHECKOSSSE
 #ifdef XORG_VERSION_CURRENT
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,13,0)
+//#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,13,0)
 #define SISCHECKOSSSE		/* Automatic check OS for SSE; requires SigIll facility */
-#endif
+//#endif
 #endif
 
 #undef SISGAMMARAMP
 #ifdef XORG_VERSION_CURRENT
-#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,13,0)
+//#if XORG_VERSION_CURRENT >= XORG_VERSION_NUMERIC(6,8,99,13,0)
 #define SISGAMMARAMP		/* Driver can set gamma ramp; requires additional symbols in xf86sym.h */
-#endif
+//#endif
 #endif
 
 #if 0	/* Perhaps for future use */
@@ -1031,6 +1036,7 @@ typedef struct {
 #endif
     
     PCITAG		PciTag;
+
     int			PciBus, PciDevice, PciFunc;
     EntityInfoPtr	pEnt;
     int			Chipset;
