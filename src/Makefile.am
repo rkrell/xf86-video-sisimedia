@@ -23,7 +23,7 @@
 # -avoid-version prevents gratuitous .0.0.0 version numbers on the end
 # _ladir passes a dummy rpath to libtool so the thing will actually link
 # TODO: -nostdlib/-Bstatic/-lgcc platform magic, not installing the .a, etc.
-AM_CFLAGS = @XORG_CFLAGS@ @DRI_CFLAGS@
+AM_CFLAGS = @XORG_CFLAGS@ @DRI_CFLAGS@ -DSIS_USE_EXA
 sis_drv_la_LTLIBRARIES = sis_drv.la
 sis_drv_la_LDFLAGS = -module -avoid-version
 sis_drv_ladir = @moduledir@/drivers
