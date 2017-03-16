@@ -64,7 +64,9 @@
 #include "xf86Pci.h"
 #include "xf86Priv.h"
 #include "xf86_OSproc.h"
+#ifndef XSERVER_LIBPCIACCESS
 #include "xf86Resources.h"
+#endif
 #include "xf86.h"
 #include "xf86PciInfo.h"
 #include "xf86Cursor.h"
