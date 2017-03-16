@@ -1046,9 +1046,8 @@ typedef struct {
     struct pci_device *PciInfo;
 #else
     pciVideoPtr		PciInfo;
+   PCITAG              PciTag;
 #endif
-    
-    PCITAG		PciTag;
 
     int			PciBus, PciDevice, PciFunc;
     EntityInfoPtr	pEnt;

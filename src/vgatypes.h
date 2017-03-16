@@ -80,14 +80,14 @@ typedef unsigned long SISIOADDRESS;
 #endif
 #endif
 
-#ifdef SIS_XORG_XF86
-#if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,2,0,0,0)
+//#ifdef SIS_XORG_XF86
+//#if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,2,0,0,0)
 typedef unsigned long IOADDRESS;
 typedef unsigned long SISIOADDRESS;
-#else
+//#else
 typedef IOADDRESS SISIOADDRESS;
-#endif
-#endif
+//#endif
+//#endif
 
 typedef enum _SIS_CHIP_TYPE {
     SIS_VGALegacy = 0,

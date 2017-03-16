@@ -3201,12 +3201,14 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
 
     /* Find the PCI info for this screen */
     pSiS->PciInfo = xf86GetPciInfoForEntity(pSiS->pEnt->index);
-    pSiS->PciBus = PCI_CFG_BUS(pSiS->PciInfo);    
-    pSiS->PciDevice = PCI_CFG_DEV(pSiS->PciInfo); 
-    pSiS->PciFunc = PCI_CFG_FUNC(pSiS->PciInfo); 
-    pSiS->PciTag = pciTag(	PCI_DEV_BUS(pSiS->PciInfo), 
+    pSiS->PciBus = PCI_CFG_BUS(pSiS->PciInfo);
+    pSiS->PciDevice = PCI_CFG_DEV(pSiS->PciInfo);
+    pSiS->PciFunc = PCI_CFG_FUNC(pSiS->PciInfo);
+    #ifndef XSERVER_LIBPCIACCESS
+    pSiS->PciTag = pciTag(	PCI_DEV_BUS(pSiS->PciInfo),
 							PCI_DEV_DEV(pSiS->PciInfo),
 							PCI_DEV_FUNC(pSiS->PciInfo));
+    #endif
 
 #ifdef SIS_NEED_MAP_IOP
     /********************************************/
@@ -4047,7 +4049,9 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
 #endif
 
        memset(pSiS->SiS_Pr, 0, sizeof(struct SiS_Private));
+       #ifndef XSERVER_LIBPCIACCESS
        pSiS->SiS_Pr->PciTag = pSiS->PciTag;
+       #endif
        pSiS->SiS_Pr->ChipType = pSiS->ChipType;
        pSiS->SiS_Pr->ChipRevision = pSiS->ChipRev;
        pSiS->SiS_Pr->SiS_Backup70xx = 0xff;
@@ -6048,7 +6052,9 @@ static Bool
 SISMapMem(ScrnInfoPtr pScrn)
 {
     SISPtr pSiS = SISPTR(pScrn);
+    #ifndef XSERVER_LIBPCIACCESS
     int mmioFlags = VIDMEM_MMIO;
+    #endif
 #ifdef SISDUALHEAD
     SISEntPtr pSiSEnt = pSiS->entityPrivate;
 #endif
