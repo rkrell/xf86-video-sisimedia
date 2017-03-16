@@ -116,7 +116,7 @@
 #endif
 
 
-#ifdef XF86DRI
+#ifdef SISDRI
 #include "dri.h"
 #endif
 
@@ -5780,7 +5780,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
     }
 
     /* Load the dri and glx modules if requested. */
-#ifdef XF86DRI
+#ifdef SISDRI
     if(pSiS->loadDRI) {
        if(!xf86LoaderCheckSymbol("DRIScreenInit")) {
 	  if(xf86LoadSubModule(pScrn, "dri")) {
@@ -9470,7 +9470,7 @@ SISScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 
     pSiS->cmdQueueLen = 0; /* Force an EngineIdle() at start */
 
-#ifdef XF86DRI
+#ifdef SISDRI
     if(pSiS->loadDRI) {
 #ifdef SISDUALHEAD
        /* No DRI in dual head mode */
@@ -9803,7 +9803,7 @@ SISScreenInit(int scrnIndex, ScreenPtr pScreen, int argc, char **argv)
 #endif
 
    /* Finish DRI initialisation */
-#ifdef XF86DRI
+#ifdef SISDRI
     if(pSiS->loadDRI) {
        if(pSiS->directRenderingEnabled) {
           /* Now that mi, drm and others have done their thing,
@@ -10360,7 +10360,7 @@ SISSwitchMode(int scrnIndex, DisplayModePtr mode, int flags)
     }
 /* Mark for 3D full-screen bug */
 /*
-#ifdef XF86DRI    
+#ifdef SISDRI    
     if(pSiS->directRenderingEnabled) {       
 	DRILock(screenInfo.screens[scrnIndex], DRM_LOCK_QUIESCENT);
     }
@@ -10389,7 +10389,7 @@ SISSwitchMode(int scrnIndex, DisplayModePtr mode, int flags)
 #endif
 /* Mark for 3D full-screen bug */
 /*
-#ifdef XF86DRI
+#ifdef SISDRI
     if(pSiS->directRenderingEnabled) {
        DRIUnlock(screenInfo.screens[scrnIndex]);
     }
@@ -10602,7 +10602,7 @@ SISEnterVT(int scrnIndex, int flags)
 
 /* Mark for 3D full-screen bug */
 /*
-#ifdef XF86DRI
+#ifdef SISDRI
     if(pSiS->directRenderingEnabled) {
        DRIUnlock(screenInfo.screens[scrnIndex]);
     }
@@ -10630,7 +10630,7 @@ SISLeaveVT(int scrnIndex, int flags)
 {
     ScrnInfoPtr pScrn = xf86Screens[scrnIndex];
     SISPtr pSiS = SISPTR(pScrn);
-#ifdef XF86DRI
+#ifdef SISDRI
     ScreenPtr pScreen;
 
     if(pSiS->directRenderingEnabled) {
@@ -10716,7 +10716,7 @@ SISCloseScreen(int scrnIndex, ScreenPtr pScreen)
        SiSCtrlExtUnregister(pSiS, pScrn->scrnIndex);
     }
 
-#ifdef XF86DRI
+#ifdef SISDRI
     if(pSiS->directRenderingEnabled) {
        SISDRICloseScreen(pScreen);
        pSiS->directRenderingEnabled = FALSE;

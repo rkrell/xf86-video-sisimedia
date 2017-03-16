@@ -53,7 +53,9 @@ THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #include "regionstr.h"
 
 #include "sis.h"
+#ifdef SISDRI
 #include "sis_dri.h"
+#endif
 
 #include "xf86xv.h"
 #include "xf86xvmc.h"
