@@ -1706,7 +1706,7 @@ SISMFBPointerMoved(int scrnIndex, int x, int y)
        /* Need to go the official way to avoid hw access and
         * to update Xv's overlays
         */
-       (pScrn1->AdjustFrame)(scrnIndex, pScrn1->frameX0, pScrn1->frameY0, 0);
+       (pScrn1->AdjustFrame)(pScrn1, pScrn1->frameX0, pScrn1->frameY0);
     }
 }
 
