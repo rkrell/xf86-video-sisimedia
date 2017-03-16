@@ -3174,7 +3174,7 @@ SISPreInit(ScrnInfoPtr pScrn, int flags)
     pSiS->pInt = NULL;
 
     /* Save PCI Domain Base */
-#if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,2,99,0,0)
+#if XF86_VERSION_CURRENT < XF86_VERSION_NUMERIC(4,2,99,0,0) || GET_ABI_MAJOR(ABI_VIDEODRV_VERSION) >= 12
     pSiS->IODBase = 0;
 #else
     pSiS->IODBase = pScrn->domainIOBase;
