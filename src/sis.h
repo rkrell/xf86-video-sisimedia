@@ -815,7 +815,7 @@ typedef struct {
     UChar  sisRegsGR[10];
     UChar  sisDAC[768];
     UChar  sisRegs3C4[0x80];
-    UChar  sisRegs3D4[0xff];
+    UChar  sisRegs3D4[0x100];
     UChar  sisRegs3C2;
     UChar  sisCapt[0x60];
     UChar  sisVid[0x80];
