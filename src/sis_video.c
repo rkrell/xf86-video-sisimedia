@@ -140,7 +140,7 @@ void SiSInitMC(ScreenPtr pScreen);
 
 static CARD32 _sisread(SISPtr pSiS, CARD32 reg)
 {
-    SIS_MMIO_IN32(pSiS->IOBase, reg);
+    return SIS_MMIO_IN32(pSiS->IOBase, reg);
 }
 
 static void _siswrite(SISPtr pSiS, CARD32 reg, CARD32 data)
