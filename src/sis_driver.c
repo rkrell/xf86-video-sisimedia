@@ -11455,7 +11455,7 @@ SISPMEvent(int scrnIndex, pmEvent event, Bool undo)
 	                inSISIDXREG(SISCR,0x3d,hotkeyflag);/*check device switch flag from BIOS CR 0x3d bit[2].*/
                         
 			
-			if(hotkeyflag & 0x04)
+			if(pSiS->IgnoreHotkeyFlag || (hotkeyflag & 0x04))
 			{	
 						
 			SISCRT1PreInit(pScrn); /*redetecting CRT1, pSiS->CRT1detected will update.*/

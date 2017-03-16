@@ -159,7 +159,8 @@ typedef enum {
     OPTION_PSEUDO,
     OPTION_FUTRO_TIMING, /*chaoyu's modified: for Fuji-Siemans specail timing*/
     OPTION_TRACEVGAMISCW,
-    OPTION_USETIMING1366  /*option of enable 1366x768 timing for LVDS panel. Ivans@090109*/
+    OPTION_USETIMING1366,  /*option of enable 1366x768 timing for LVDS panel. Ivans@090109*/
+    OPTION_IGNOREHOTKEYFLAG
 } SISOpts;
 
 static const OptionInfoRec SISOptions[] = {
@@ -305,6 +306,7 @@ static const OptionInfoRec SISOptions[] = {
     { OPTION_FUTRO_TIMING,		"FutroTiming",			OPTV_BOOLEAN,   {0}, FALSE },/*chaoyu's modified: for Fuji-seimans special timing*/
     { OPTION_TRACEVGAMISCW,             "TraceVgaMISCW",                OPTV_BOOLEAN,   {0}, FALSE },/*Ivans added for helping detected CRT1 using BIOS setting.*/
     { OPTION_USETIMING1366,              "UseTiming1366",                  OPTV_BOOLEAN,   {0}, FALSE },/*enable 1366 timing on LVDS, Ivans@090109*/
+    { OPTION_IGNOREHOTKEYFLAG,		"IgnoreHotkeyFlag",		OPTV_BOOLEAN,	{0}, FALSE },
     { -1,				NULL,				OPTV_NONE,	{0}, FALSE }
 };
 
@@ -624,6 +626,7 @@ SiSOptions(ScrnInfoPtr pScrn)
     pSiS->CRT2IsScrn0 = FALSE;
 #endif
 #endif
+    pSiS->IgnoreHotkeyFlag = FALSE;
   
     /* Chipset dependent defaults */
 
@@ -2417,6 +2420,14 @@ SiSOptions(ScrnInfoPtr pScrn)
         if(val){
                 xf86DrvMsg(pScrn->scrnIndex, X_INFO,"Using Special Timing 1366x768 with LVDS.\n");
                 pSiS->EnablePanel_1366x768 = TRUE;		
+        }
+    }
+    /* Ignore hotkey flag for video switch, switch on every
+     * XF86_APM_CAPABILITY_CHANGED event */ 
+    if(xf86GetOptValBool(pSiS->Options, OPTION_IGNOREHOTKEYFLAG, &val)){
+        if(val){
+                xf86DrvMsg(pScrn->scrnIndex, X_INFO,"Ignoring hotkey flag\n");
+                pSiS->IgnoreHotkeyFlag = TRUE;		
         }
     }
 

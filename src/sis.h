@@ -1571,6 +1571,9 @@ typedef struct {
 
   /* Enable special 1366x768x60hz mode of LVDS panel. Ivans@090109 */
     Bool  EnablePanel_1366x768;
+
+    /* Ignore hotkey flag on capability changed APM events */
+    Bool IgnoreHotkeyFlag;
 	
 } SISRec, *SISPtr;
 
