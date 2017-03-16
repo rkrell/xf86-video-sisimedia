@@ -24,11 +24,11 @@
 # _ladir passes a dummy rpath to libtool so the thing will actually link
 # TODO: -nostdlib/-Bstatic/-lgcc platform magic, not installing the .a, etc.
 AM_CFLAGS = @XORG_CFLAGS@ @DRI_CFLAGS@ -DSIS_USE_EXA
-sis_drv_la_LTLIBRARIES = sis_drv.la
-sis_drv_la_LDFLAGS = -module -avoid-version
-sis_drv_ladir = @moduledir@/drivers
+sisimedia_drv_la_LTLIBRARIES = sisimedia_drv.la
+sisimedia_drv_la_LDFLAGS = -module -avoid-version
+sisimedia_drv_ladir = @moduledir@/drivers
 
-sis_drv_la_SOURCES = \
+sisimedia_drv_la_SOURCES = \
 	300vtbl.h \
 	310vtbl.h \
 	init301.c \
@@ -78,7 +78,7 @@ sis_drv_la_SOURCES = \
 	vstruct.h 
 
 if DRI
-sis_drv_la_SOURCES += \
+sisimedia_drv_la_SOURCES += \
          sis_dri.c \
          sis_dri.h 
 endif

@@ -257,7 +257,7 @@ static XF86ModuleVersionInfo sisVersRec =
 #ifdef _X_EXPORT
 _X_EXPORT
 #endif
-XF86ModuleData sisModuleData = { &sisVersRec, sisSetup, NULL };
+XF86ModuleData sisimediaModuleData = { &sisVersRec, sisSetup, NULL };
 
 pointer
 sisSetup(pointer module, pointer opts, int *errmaj, int *errmin)

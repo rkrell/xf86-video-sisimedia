@@ -158,7 +158,7 @@
 
 
 #define SIS_NAME                "SIS"
-#define SIS_DRIVER_NAME         "sis"
+#define SIS_DRIVER_NAME         "sisimedia"
 #define SIS_MAJOR_VERSION       0
 
 /* chris, sync. with DRI(3D driver) request version */
